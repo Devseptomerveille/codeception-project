@@ -5,6 +5,8 @@
 # If you need both WebDriver and PHPBrowser tests - create a separate suite.
 
 actor: AcceptanceTester
+step_decorators:
+  - \Codeception\Step\Retry
 extensions:
     enabled:
         - Codeception\Extension\Recorder:
@@ -12,17 +14,11 @@ extensions:
               delete_successful: true
 modules:
     enabled:
-        - Db:
-              dsn: 'sqlite:./data/database.sqlite'
-              user: ''
-              password: ''
-        #        - PhpBrowser:
-        #            url: http://localhost:8000
         - WebDriver:
-              url: http://localhost:8000
-              browser: chrome
-              wait: 3
-              capabilities:
+                url: http://localhost:8000
+                browser: chrome
+                wait: 3
+                capabilities:
                   "goog:chromeOptions":
                       args: ["--no-sandbox", "--headless", "--disable-dev-shm-usage"]
         - \App\Tests\Helper\Acceptance
